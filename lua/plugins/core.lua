@@ -5,4 +5,12 @@ return {
       colorscheme = "catppuccin",
     },
   },
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   setup = {
+  --     options = {
+  --       theme = "catppuccin",
+  --     },
+  --   },
+  -- },
 }
