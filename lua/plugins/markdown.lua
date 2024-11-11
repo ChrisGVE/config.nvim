@@ -6,12 +6,14 @@ return {
     })
   end,
   {
-    "ellisonleao/glow.nvim",
-    event = "VeryLazy",
-    ft = { "markdown" },
-    cmd = "Glow",
-    keys = { "<localleader>v", "<cmd>Glow<cr>", desc = "View markdown", ft = "markdown" },
-    config = true,
+    "OXY2DEV/markview.nvim",
+    lazy = true, -- false Recommended
+    ft = "markdown", -- If you decide to lazy-load anyway
+    keys = {},
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
   },
   {
     "dhruvasagar/vim-table-mode",

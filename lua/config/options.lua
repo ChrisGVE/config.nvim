@@ -9,3 +9,5 @@ vim.opt.winbar = "%=%m %f"
 vim.g.simple_todo_map_keys = 0
 
 vim.g.python3_host_prog = "/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python"
+
+vim.g.lazyvim_prettier_needs_config = false
