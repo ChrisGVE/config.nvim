@@ -2,7 +2,7 @@ return {
   "doctorfree/cheatsheet.nvim",
   event = "VeryLazy",
   keys = {
-    { "<localleader>?", ":<C-U>Cheatsheet<CR>", desc = "Cheatsheet" },
+    { "<localleader>?", "<cmd>Cheatsheet<CR>", desc = "Cheatsheet" },
   },
   dependencies = {
     { "nvim-telescope/telescope.nvim" },

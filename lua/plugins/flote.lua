@@ -19,9 +19,9 @@ return {
     },
   },
   keys = {
-    { "<leader>bf", ":<C-U>Flote<CR>", desc = "Flote local" },
+    { "<leader>bf", "<cmd>Flote<CR>", desc = "Flote local" },
     { "<leader>F", "", desc = "Flote" },
-    { "<leader>Fg", ":<C-U>Flote global<CR>", desc = "Flote global" },
-    { "<leader>Fm", ":<C-u>Flote manage<CR>", desc = "Flote manage" },
+    { "<leader>Fg", "<cmd>Flote global<CR>", desc = "Flote global" },
+    { "<leader>Fm", "<cmd>Flote manage<CR>", desc = "Flote manage" },
   },
 }
