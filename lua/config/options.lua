@@ -13,3 +13,7 @@ vim.g.python3_host_prog = "/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/py
 vim.g.lazyvim_prettier_needs_config = false
 
 vim.opt_global.scrolloff = 999
+
+vim.o.termguicolors = true
+
+vim.o.mousemoveevent = true
