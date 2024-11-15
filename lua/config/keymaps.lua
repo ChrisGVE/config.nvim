@@ -23,3 +23,8 @@ map("v", "K", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
 -- map("n", "j", "jzz", { desc = "Up" })
 -- map("n", "n", "nzzzv", { desc = "Next search result" })
 -- map("n", "N", "Nzzzv", { desc = "Previous search result" })
+
+-- Deactivate notification from <leader>n too (already exists under ui)
+map("n", "<leader>nn", function()
+  Snacks.notifier.hide()
+end, { desc = "Dismiss All Notification" })
