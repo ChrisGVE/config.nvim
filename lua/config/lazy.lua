@@ -51,3 +51,9 @@ require("lazy").setup({
     },
   },
 })
+
+-- Change the behavior of which-key when creating shortcuts to buffers
+require("which-key.extras").bufname = function(buf)
+  local name = vim.api.nvim_buf_get_name(buf)
+  return name == "" and "[No Name]" or vim.fn.fnamemodify(name, ":t")
+end
