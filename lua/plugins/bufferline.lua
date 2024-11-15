@@ -14,9 +14,7 @@ return {
         return string.format("%s|%s", opts.id, opts.raise(opts.ordinal))
       end,
       sort_by = function(buffer_a, buffer_b)
-        local name_a = vim.fs.basename(buffer_a.path)
-        local name_b = vim.fs.basename(buffer_b.path)
-        return name_a < name_b
+        return buffer_a.path < buffer_b.path
       end,
       -- groups = {
       --   options = {
