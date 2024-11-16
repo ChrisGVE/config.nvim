@@ -106,58 +106,56 @@ return {
       sort_by = function(buffer_a, buffer_b)
         return buffer_a.path < buffer_b.path
       end,
-      groups = {
-        options = {
-          toggle_hidden_on_enter = true,
-        },
-        items = {
-          require("bufferline.groups").builtin.ungrouped,
-          {
-            name = "Lua",
-            highlight = { sp = colors.sky },
-            auto_close = true,
-            matcher = function(buf)
-              return buf.path:match("%.lua")
-            end,
-          },
-          {
-            name = "Python",
-            highlight = { sp = colors.blue },
-            auto_close = true,
-            matcher = function(buf)
-              return buf.path:match("%.py")
-            end,
-          },
-          {
-            name = "C/C++",
-            highlight = { sp = colors.blue },
-            auto_close = true,
-            matcher = function(buf)
-              return buf.path:match("%.c")
-                or buf.path:match("%.h")
-                or buf.path:match("%.cpp")
-                or buf.path:match("%.hpp")
-            end,
-          },
-          {
-            name = "Docs",
-            highlight = { sp = colors.green },
-            auto_close = true, -- whether or not close this group if it doesn't contain the current buffer
-            matcher = function(buf)
-              return buf.path:match("%.md") or buf.path:match("%.txt")
-            end,
-          },
-          {
-            name = "Tests", -- Mandatory
-            highlight = { underline = true, sp = colors.maroon }, -- Optional
-            icon = " ", -- Optional
-            auto_close = true,
-            matcher = function(buf) -- Mandatory
-              return buf.path:match("%_test") or buf.path:match("%_spec")
-            end,
-          },
-        },
-      },
+      -- groups = {
+      --   options = {
+      --     toggle_hidden_on_enter = true,
+      --   },
+      --   items = {
+      --     require("bufferline.groups").builtin.ungrouped,
+      --     {
+      --       name = "Lua",
+      --       highlight = { sp = colors.sky },
+      --       auto_close = true,
+      --       matcher = function(buf)
+      --         return buf.path:match("%.lua")
+      --       end,
+      --     },
+      --     {
+      --       name = "Python",
+      --       highlight = { sp = colors.blue },
+      --       auto_close = true,
+      --       matcher = function(buf)
+      --         return buf.path:match("%.py")
+      --       end,
+      --     },
+      --     {
+      --       name = "C/C++",
+      --       highlight = { sp = colors.peach },
+      --       auto_close = true,
+      --       matcher = function(buf)
+      --         return buf.path:match("%.c") or buf.path:match("%.h") or buf.path:match("%.cpp")
+      --         -- or buf.path:match("%.hpp")
+      --       end,
+      --     },
+      --     {
+      --       name = "Docs",
+      --       highlight = { sp = colors.green },
+      --       auto_close = true, -- whether or not close this group if it doesn't contain the current buffer
+      --       matcher = function(buf)
+      --         return buf.path:match("%.md") or buf.path:match("%.txt")
+      --       end,
+      --     },
+      --     {
+      --       name = "Tests", -- Mandatory
+      --       highlight = { underline = true, sp = colors.maroon }, -- Optional
+      --       icon = " ", -- Optional
+      --       auto_close = true,
+      --       matcher = function(buf) -- Mandatory
+      --         return buf.path:match("%_test") or buf.path:match("%_spec")
+      --       end,
+      --     },
+      --   },
+      -- },
     },
   },
 }
