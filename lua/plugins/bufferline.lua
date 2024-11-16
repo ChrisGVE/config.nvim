@@ -156,14 +156,6 @@ return {
               return buf.path:match("%_test") or buf.path:match("%_spec")
             end,
           },
-          {
-            name = "QMK",
-            highlight = { sp = colors.mauve },
-            auto_close = true,
-            matcher = function(buf)
-              return buf.path:match("%qmk%")
-            end,
-          },
         },
       },
     },
