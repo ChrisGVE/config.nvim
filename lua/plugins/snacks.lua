@@ -32,5 +32,7 @@ return {
     notifier = { enabled = true },
     quickfile = { enabled = true },
     words = { enabled = true },
+    startup = { enabled = true },
+    statuscolumn = { enabled = true },
   },
 }
