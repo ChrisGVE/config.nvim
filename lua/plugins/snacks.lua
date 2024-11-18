@@ -2,6 +2,19 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
+  opts = {
+    bigfile = { enabled = true },
+    notifier = { enabled = true },
+    quickfile = { enabled = true },
+    words = { enabled = true },
+    statuscolumn = { enabled = true },
+    dashboard = { enabled = true },
+    styles = {
+      notification = {
+        wo = { wrap = true }, -- Wrap notifications
+      },
+    },
+  },
   keys = {
     { "<leader>n", "", desc = "notifications" },
     { "<leader>nh", "<cmd>lua Snacks.notifier.show_history()<cr>", desc = "history" },
@@ -23,16 +36,5 @@ return {
         })
       end,
     },
-  },
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-    bigfile = { enabled = true },
-    notifier = { enabled = true },
-    quickfile = { enabled = true },
-    words = { enabled = true },
-    startup = { enabled = true },
-    statuscolumn = { enabled = true },
   },
 }
