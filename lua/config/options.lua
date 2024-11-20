@@ -12,7 +12,9 @@ vim.g.python3_host_prog = "/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/py
 
 vim.g.lazyvim_prettier_needs_config = false
 
-vim.opt_global.scrolloff = 999
+-- Commented out the below as forcing the cursor to be in the middle of the
+-- screen seems to have unexpected bad behavior
+-- vim.opt_global.scrolloff = 999
 
 vim.o.termguicolors = true
 
