@@ -41,7 +41,7 @@ return {
       "benfowler/telescope-luasnip.nvim",
       "ghassan0/telescope-glyph.nvim",
       "xiyaowong/telescope-emoji.nvim",
-      "ssnvim-telescope/telescope-symbols.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
       "tsakirist/telescope-lazy.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-project.nvim",
