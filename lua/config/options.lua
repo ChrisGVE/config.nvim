@@ -17,3 +17,5 @@ vim.opt_global.scrolloff = 999
 vim.o.termguicolors = true
 
 vim.o.mousemoveevent = true
+
+vim.g.lazyvim_picker = "telescope"
