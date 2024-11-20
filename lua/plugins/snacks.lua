@@ -9,45 +9,38 @@ return {
     words = { enabled = true },
     statuscolumn = { enabled = true },
     dashboard = {
-      -- {
+      preset = {
+        header = [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+      },
       sections = {
         { section = "header" },
-        { section = "keys", gap = 1, padding = 1 },
-        {
-          pane = 2,
-          icon = " ",
-          title = "Recent Files",
-          section = "recent_files",
-          indent = 2,
-          padding = 1,
-          height = 6,
-        },
-        { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1, height = 6 },
+        { pane = 2, height = 5, padding = 1 },
+        { icon = " ", title = "Keymaps", section = "keys", indent = 3, gap = 1, padding = 1 },
+        { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 3, padding = 1 },
+        { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 3, padding = 1 },
         {
           pane = 2,
           icon = " ",
           title = "Git Status",
           section = "terminal",
           enabled = function()
-            local handle = io.popen("git rev-parse --is-inside-work-tree 2>&1")
-            if handle then
-              local result = handle:read("*a") or ""
-              print("result:", "'" .. result .. "'")
-              handle:close()
-              return result == "true\n"
-            end
-            return false
+            local obj = vim.system({ "git", "rev-parse", "--is-inside-work-tree" }):wait()
+            return obj.code == 0
           end,
-          -- vim.fn.isdirectory(".git") == 1,
           cmd = "hub status --short --branch --renames",
-          height = 6,
+          height = 5,
           padding = 1,
           ttl = 5 * 60,
           indent = 3,
         },
         { section = "startup" },
       },
-      -- },
     },
     styles = {
       notification = {
