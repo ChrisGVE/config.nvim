@@ -1,5 +1,8 @@
 return {
   "2kabhishek/nerdy.nvim",
+  keys = {
+    { "<leader>sN", "<cmd>Nerdy<CR>", desc = "Nerdy" },
+  },
   dependencies = {
     "stevearc/dressing.nvim",
     "nvim-telescope/telescope.nvim",
