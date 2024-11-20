@@ -47,7 +47,7 @@ map("n", "<C-l>", require("smart-splits").move_cursor_right, { desc = "Move righ
 map("n", "<C-\\>", require("smart-splits").move_cursor_previous, { desc = "Move to previous window" })
 
 -- swapping buffers between windows
-map("n", "<leader>Left", require("smart-splits").swap_buf_left, { desc = "Swap buffer left window" })
-map("n", "<leader>Down", require("smart-splits").swap_buf_down, { desc = "Swap buffer down window" })
-map("n", "<leader>Up", require("smart-splits").swap_buf_up, { desc = "Swap buffer up window" })
-map("n", "<leader>Right", require("smart-splits").swap_buf_right, { desc = "Swap buffer right window" })
+map("n", "<leader><Left>", require("smart-splits").swap_buf_left, { desc = "Swap buffer left window" })
+map("n", "<leader><Down>", require("smart-splits").swap_buf_down, { desc = "Swap buffer down window" })
+map("n", "<leader><Up>", require("smart-splits").swap_buf_up, { desc = "Swap buffer up window" })
+map("n", "<leader><Right>", require("smart-splits").swap_buf_right, { desc = "Swap buffer right window" })
