@@ -1,3 +1,5 @@
+-- Snacks = require("snacks")
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -29,7 +31,9 @@ return {
           icon = " ",
           title = "Git Status",
           section = "terminal",
+          -- enabled = require("Snacks").git.get_root(),
           enabled = function()
+            -- print(Snacks.git.get_root())
             local obj = vim.system({ "git", "rev-parse", "--is-inside-work-tree" }):wait()
             return obj.code == 0
           end,
