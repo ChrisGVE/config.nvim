@@ -4,15 +4,13 @@
 
 local map = vim.keymap.set
 
--- Clear search highlights
-map("n", "//", ":nohl<CR>", { desc = "Clear search results" })
-
 -- Insert new line
 map("n", "<cr>", "o<Esc>", { desc = "Insert blank line below" })
+map("n", "<S-cr>", "O<Esc>", { desc = "Insert blank line above" })
 
 -- Visual mode moving blocks
-map("v", "J", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
-map("v", "K", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
+-- map("v", "J", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
+-- map("v", "K", ":m '<-2<CR>gv=gv", { silent = true, desc = "Move block up" })
 
 -- Navigation putting the cursor in the middle of the screen
 -- map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down" })
