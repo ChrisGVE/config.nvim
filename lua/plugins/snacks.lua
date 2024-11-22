@@ -31,12 +31,14 @@ return {
           icon = " ",
           title = "Git Status",
           section = "terminal",
-          -- enabled = require("Snacks").git.get_root(),
           enabled = function()
-            -- print(Snacks.git.get_root())
-            local obj = vim.system({ "git", "rev-parse", "--is-inside-work-tree" }):wait()
-            return obj.code == 0
+            return Snacks.git.get_root() ~= nil
           end,
+          -- enabled = function()
+          --   print(Snacks.git.get_root())
+          --   local obj = vim.system({ "git", "rev-parse", "--is-inside-work-tree" }):wait()
+          --   return obj.code == 0
+          -- end,
           cmd = "hub status --short --branch --renames",
           height = 5,
           padding = 1,
