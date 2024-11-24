@@ -24,6 +24,10 @@ return {
       "woke", -- Text
       "write-good", -- text
       "xmlformatter", -- XML
+      "debugpy", -- Python
+      "ruff", -- Python
+      "mypy", -- Python
+      "pydocstyle", -- Python
     },
     auto_update = true,
     debounce_hours = 12, -- at least 12 hours between attempts to install/update
