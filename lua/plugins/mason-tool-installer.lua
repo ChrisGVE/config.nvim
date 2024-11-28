@@ -28,6 +28,8 @@ return {
       "ruff", -- Python
       "mypy", -- Python
       "pydocstyle", -- Python
+      "nixpkgs-fmt", -- Nix
+      "rnix-lsp", -- Nix
     },
     auto_update = true,
     debounce_hours = 12, -- at least 12 hours between attempts to install/update
