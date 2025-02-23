@@ -9,11 +9,12 @@ return {
   end,
   {
     "OXY2DEV/markview.nvim",
-    lazy = true, -- false Recommended
-    ft = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante" }, -- If you decide to lazy-load anyway
+    lazy = false, -- false Recommended
     opts = {
-      filetypes = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante" },
-      buf_ignore = {},
+      preview = {
+        filetypes = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante", "codecompanion" },
+        buf_ignore = {},
+      },
       max_length = 99999,
     },
     keys = {},
