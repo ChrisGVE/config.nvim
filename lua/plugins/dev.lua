@@ -71,12 +71,17 @@ return {
     "chrisgve/taskforge.nvim",
     dependencies = {
       "ahmedkhalf/project.nvim",
-      "folke/snacks.nvim", -- optional
-      -- "nvimdev/dashboard-nvim", -- optional
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "stevearc/conform.nvim",
+      "folke/snacks.nvim",
     },
     dev = true,
     lazy = false,
-    priority = 900,
+    priority = 1100,
+    config = function()
+      require("taskforge").setup()
+    end,
     opts = { --- configuration for the Dashboard
       debug = {
         --- toggle the logging
@@ -88,6 +93,7 @@ return {
         project_synonyms = {
           ["config"] = ".config",
           ["keyboard"] = { "qmk_userspace", "qmk_firmware", "qmk_keychron" },
+          ["taskforge"] = { "taskforge.nvim-deepseek" },
         },
       },
       dashboard = {
@@ -104,17 +110,19 @@ return {
             -- "due",
             "urgency",
           },
-        },
-        --- List of replacements when getting lines for dashboard
-        project_abbreviations = {
-          ["neovim."] = "nvim.",
-          ["config."] = "cfg.",
-          ["python."] = "py.",
-          ["fountains."] = "f.",
-          ["devtools."] = "dev.",
-          ["wezterm."] = "wzt.",
-          ["work."] = "wk.",
-          ["personal."] = "p.",
+          --- List of replacements when getting lines for dashboard
+          project_abbreviations = {
+            ["neovim."] = "nvim.",
+            ["config."] = "cfg.",
+            ["python."] = "py.",
+            ["fountains."] = "f.",
+            ["devtools."] = "dev.",
+            ["wezterm."] = "wzt.",
+            ["work."] = "wk.",
+            ["personal."] = "p.",
+          },
+          shorten_sections = true,
+          max_width = 55,
         },
       },
     },

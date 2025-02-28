@@ -2,7 +2,6 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
-  dependencies = { "chrisgve/taskforge.nvim" },
   opts = {
     dashboard = {
       sections = {
@@ -14,8 +13,40 @@ return {
           align = "center",
         },
         function()
-          return require("taskforge").get_snacks_dashboard_tasks()
+          local ok, taskforge = pcall(require, "taskforge")
+          if ok and taskforge.get_dashboard_section then
+            vim.notify("Taskforge dashboard section loaded")
+            local section = taskforge.get_dashboard_section()
+            if section and #section > 0 then
+              vim.notify("Taskforge section has " .. #section .. " items")
+              return section
+            else
+              vim.notify("Taskforge section is empty")
+              return {
+                {
+                  icon = " ",
+                  title = "Tasks (Fallback)",
+                  pane = 2,
+                },
+                {
+                  pane = 2,
+                  padding = 1,
+                  indent = 3,
+                  text = {
+                    { "No tasks available", hl = "special" },
+                  },
+                  height = 3,
+                },
+              }
+            end
+          else
+            vim.notify("Taskforge not available for dashboard")
+            return {}
+          end
         end,
+        -- function()
+        --   return require("taskforge.dashboard").create_section()
+        -- end,
         { icon = " ", title = "Keymaps", section = "keys", indent = 3, gap = 1, padding = 1, pane = 1 },
         { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 3, padding = 1 },
         { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 3, padding = 1 },
