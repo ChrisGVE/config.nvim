@@ -1,87 +1,190 @@
--- lua/plugins/ai-assistant.lua
---
-vim.api.nvim_create_user_command("AvanteCreateTest", function()
-  vim.cmd([[AvanteAsk Create a unit test file for this module. Format it as a complete file.]])
-  -- Then use callback to create the file
-end, {})
+local function is_openai_available()
+  return os.getenv("OPENAI_API_KEY")
+end
+
+local function is_claude_available()
+  return os.getenv("ANTHORPIC_API_KEY")
+end
+
+local function is_deepseek_available()
+  return os.getenv("DEEPSEEK_API_KEY")
+end
+
+local function is_groq_available()
+  return os.getenv("GROQ_API_KEY")
+end
+
+local function is_ollama_available()
+  return os.execute("curl -s http://localhost:11434/api/tags > /dev/null 2>&1") == 0
+end
+
+local function is_avante_available()
+  local has_api_key = is_openai_available() or is_claude_available() or is_deepseek_available() or is_groq_available()
+  local ollama_running = is_ollama_available()
+  return has_api_key or ollama_running
+end
 
 return {
-  -- Avante.nvim - Primary AI assistant with shortcuts
   {
     "yetone/avante.nvim",
-    enabled = true,
+    enabled = is_avante_available(),
     event = "VeryLazy",
     keys = {
       { "_a", "", desc = "AI Assistant" },
+      { "_c", "", desc = "AI Coding Assistant" },
       {
-        "_ad",
+        "_cd",
         function()
-          vim.cmd([[AvanteAsk Generate comprehensive documentation]])
+          vim.cmd(
+            [[AvanteAsk Generate detailed inline documentation, including function signatures, parameters, and return types.]]
+          )
         end,
-        desc = "Generate docs",
+        desc = "Generate Code Documentation",
         mode = { "n", "v" },
       },
       {
-        "_ac",
+        "_ce",
         function()
-          vim.cmd([[AvanteAsk Using the write_file tool, create a proper unit test for this code.]])
+          vim.cmd(
+            [[AvanteAsk Generate user-friendly documentation with examples and explanations suited for end users.]]
+          )
         end,
-        desc = "Create test file",
+        desc = "Generate End-User Documentation",
         mode = { "n", "v" },
       },
       {
-        "_at",
+        "_ct",
         function()
-          vim.cmd([[AvanteAsk Generate unit tests]])
+          vim.cmd([[AvanteAsk Generate thorough unit tests with appropriate test cases.]])
         end,
-        desc = "Generate tests",
+        desc = "Generate Unit Tests",
         mode = { "n", "v" },
       },
       {
-        "_ar",
+        "_cr",
         function()
-          vim.cmd([[AvanteAsk Refactor this code]])
+          vim.cmd(
+            [[AvanteAsk Improve code readability, maintainability, and performance by refactoring where necessary.]]
+          )
         end,
-        desc = "Refactor code",
+        desc = "Refactor Code",
         mode = { "n", "v" },
       },
       {
-        "_ao",
+        "_co",
         function()
-          vim.cmd([[AvanteAsk Optimize this code]])
+          vim.cmd([[AvanteAsk Optimize this code for efficiency, reducing computational complexity where possible.]])
         end,
-        desc = "Optimize code",
+        desc = "Optimize Code",
         mode = { "n", "v" },
       },
       {
-        "_aS",
+        "_cS",
         function()
-          vim.cmd([[AvanteAsk Simplify this code]])
+          vim.cmd([[AvanteAsk Simplify this code while maintaining functionality and readability.]])
         end,
-        desc = "Simplify code",
+        desc = "Simplify Code",
+        mode = { "n", "v" },
+      },
+      { "_t", "", desc = "AI Text Tools" },
+      {
+        "_tw",
+        function()
+          vim.cmd([[AvanteAsk Rewrite this text for improved clarity and readability.]])
+        end,
+        desc = "Rewrite for Clarity",
+        mode = { "n", "v" },
+      },
+      {
+        "_ts",
+        function()
+          vim.cmd([[AvanteAsk Summarize this text while retaining key information.]])
+        end,
+        desc = "Summarize Text",
+        mode = { "n", "v" },
+      },
+      {
+        "_tp",
+        function()
+          vim.cmd([[AvanteAsk Proofread this text and correct grammar, spelling, and stylistic errors.]])
+        end,
+        desc = "Proofread and Correct Grammar",
+        mode = { "n", "v" },
+      },
+      {
+        "_tg",
+        function()
+          vim.cmd(
+            [[AvanteAsk Generate a concise and meaningful git commit message based on the current changes. Format it according to conventional commits.]]
+          )
+        end,
+        desc = "Generate Git Commit Message",
         mode = { "n", "v" },
       },
     },
     opts = {
       provider = "claude",
+      cursor_applying_provider = "groq",
+      auto_suggestion_provider = "ollama",
+      dual_boost = {
+        enabled = true,
+        first_provider = "groq",
+        second_provider = "deepseek",
+        prompt = "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
+        timeout = 60000, -- Timeout in milliseconds
+      },
+      behaviour = {
+        auto_suggestions = true,
+        auto_set_highlight_group = true,
+        auto_set_keymap = true,
+        support_paste_from_clipboard = true,
+        enable_cursor_planning_mode = true,
+        auto_apply_diff_after_generation = true,
+      },
+      vendors = {
+        ollama = {
+          __inherited_from = "openai",
+          endpoint = "http://127.0.0.1:11434/v1",
+          model = function()
+            -- Current buffer type for model context
+            local ft = vim.bo.filetype
+            local model = "mistral:latest" -- Default model
+
+            -- Select appropriate model based on filetype
+            if ft == "lua" or ft == "python" or ft == "c" or ft == "cpp" or ft == "zig" then
+              model = "codellama:7b-instruct" -- Better for code
+            end
+            return model
+          end,
+        },
+        deepseek = {
+          __inherited_from = "openai",
+          api_key_name = "DEEPSEEK_API_KEY",
+          endpoint = "https://api.deepseek.com",
+          model = "deepseek-coder",
+        },
+        groq = {
+          __inherited_from = "openai",
+          api_key_name = "GROQ_API_KEY",
+          endpoint = "https://api.groq.com/openai/v1/",
+          model = "llama-3.3-70b-versatible",
+          max_tokens = 32768,
+        },
+      },
       claude = {
         model = "claude-3-5-sonnet-20241022",
       },
       openai = {
         model = "gpt-4o",
       },
-      behaviour = {
-        enable_cursor_planning_mode = true,
-        auto_apply_diff_after_generation = true, -- Auto-apply diffs
-      },
       mappings = {
         ask = "_aa",
         edit = "_ae",
-        refresh = "_aR",
+        refresh = "_ar",
         focus = "_af",
         toggle = {
           default = "_at",
-          debug = "_aD",
+          debug = "_ad",
           hint = "_ah",
           suggestion = "_as",
           repomap = "_am",
@@ -93,134 +196,23 @@ return {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-    },
-  },
-
-  -- Blink.cmp with Ollama integration
-  {
-    "saghen/blink.cmp",
-    event = "InsertEnter",
-    config = function()
-      -- Create our Ollama source module
-      local ollama_source = {}
-
-      function ollama_source:complete(params, callback)
-        local Job = require("plenary.job")
-        local context = params.context or {}
-        local prefix = context.prefix or ""
-
-        -- Skip if prefix is too short
-        if #prefix < 2 then
-          callback({})
-          return
-        end
-
-        -- Current buffer type for model context
-        local ft = vim.bo.filetype
-        local model = "mistral:latest" -- Default model
-
-        -- Select appropriate model based on filetype
-        if ft == "lua" or ft == "python" or ft == "c" or ft == "cpp" or ft == "zig" then
-          model = "codellama:7b-instruct" -- Better for code
-        end
-
-        -- Prepare the payload for Ollama API
-        local payload = {
-          model = model,
-          prompt = prefix,
-          stream = false,
-          options = {
-            temperature = 0.2,
-            num_predict = 30,
-          },
-        }
-
-        local json_payload = vim.fn.json_encode(payload)
-
-        -- Make HTTP request to local Ollama server
-        Job:new({
-          command = "curl",
-          args = {
-            "-s",
-            "-X",
-            "POST",
-            "-H",
-            "Content-Type: application/json",
-            "-d",
-            json_payload,
-            "http://localhost:11434/api/generate",
-          },
-          on_exit = function(j, _)
-            local result = table.concat(j:result(), "\n")
-            local ok, parsed = pcall(vim.fn.json_decode, result)
-
-            if not ok or not parsed or not parsed.response then
-              callback({})
-              return
-            end
-
-            -- Create completion item
-            local completion = {
-              label = parsed.response,
-              insertText = parsed.response,
-              kind = require("blink.cmp.types").CompletionItemKind.Text,
-              labelDetails = {
-                description = "(Ollama)",
-              },
-            }
-
-            callback({ completion })
-          end,
-        }):start()
-      end
-
-      function ollama_source.new()
-        return ollama_source
-      end
-
-      package.loaded["ollama_source"] = ollama_source
-
-      -- Configure blink.cmp with the Ollama source
-      require("blink.cmp").setup({
-        appearance = {
-          nerd_font_variant = "mono",
-        },
-        completion = {
-          ghost_text = {
-            enabled = true,
-          },
-          menu = {
-            draw = {
-              columns = {
-                { "kind_icon", "kind", gap = 1 },
-                { "label" },
-                { "source_name", gap = 2 }, -- Show source explicitly
-              },
-            },
-          },
-        },
-        sources = {
-          providers = {
-            lsp = {
-              score_offset = 100, -- Higher priority
-            },
-            ollama = {
-              module = "ollama_source",
-              name = "Ollama 🤖", -- Custom icon/name
-              score_offset = 90,
-            },
-          },
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
           default = {
-            "lsp",
-            "path",
-            "buffer",
-            "ollama",
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
           },
         },
-      })
-    end,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+      },
     },
   },
 }
