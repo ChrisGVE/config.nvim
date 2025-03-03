@@ -88,6 +88,7 @@ return {
         enable = true,
         log_file = "/Users/chris/dev/projects/plugins/taskforge.nvim/debug.log",
         log_max_len = 160,
+        verbose = true,
       },
       project = {
         project_synonyms = {
