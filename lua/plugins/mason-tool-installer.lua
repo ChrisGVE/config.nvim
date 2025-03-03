@@ -8,7 +8,6 @@ return {
       "esbonio", -- Sphinx
       "jinja-lsp", -- Jinja
       "lemminx", -- XML
-      "ltex-ls", -- LS to connect to ltex_extra.nvim
       "prettierd", -- formatter
       "selene", -- lua
       "sonarlint-language-server", -- multiple, selected for XML
