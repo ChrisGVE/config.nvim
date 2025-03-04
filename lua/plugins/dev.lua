@@ -79,16 +79,16 @@ return {
     dev = true,
     lazy = false,
     priority = 1100,
-    config = function()
-      require("taskforge").setup()
-    end,
+    -- config = function(_, opts)
+    --   require("taskforge").setup(opts)
+    -- end,
     opts = { --- configuration for the Dashboard
       debug = {
         --- toggle the logging
         enable = true,
         log_file = "/Users/chris/dev/projects/plugins/taskforge.nvim/debug.log",
         log_max_len = 160,
-        verbose = true,
+        verbose = false,
       },
       project = {
         project_synonyms = {
