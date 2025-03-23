@@ -79,6 +79,7 @@ return {
     dev = true,
     lazy = false,
     priority = 1100,
+    enabled = false,
     -- config = function(_, opts)
     --   require("taskforge").setup(opts)
     -- end,
