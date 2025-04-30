@@ -14,6 +14,7 @@ return {
       preview = {
         filetypes = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante", "codecompanion" },
         buf_ignore = {},
+        ignore_buftypes = {},
       },
       max_length = 99999,
     },
