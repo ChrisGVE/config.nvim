@@ -9,3 +9,4 @@ data
 lazy-lock.json
 nvim.md
 lua/plugins/ollama-cert.pem
+*.old*
