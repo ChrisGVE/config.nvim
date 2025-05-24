@@ -1,82 +1,3 @@
--- Create our Ollama source module
-local ollama_source = {}
-
-function ollama_source:complete(params, callback)
-  local Job = require("plenary.job")
-  local context = params.context or {}
-  local prefix = context.prefix or ""
-
-  -- Current buffer type for model context
-  local ft = vim.bo.filetype
-  local model = "mistral:latest" -- Default model
-
-  -- Select appropriate model based on filetype
-  if ft == "lua" or ft == "python" or ft == "c" or ft == "cpp" or ft == "zig" then
-    model = "codellama:7b-instruct" -- Better for code
-  end
-
-  -- Skip if prefix is too short
-  if #prefix < 2 then
-    callback({})
-    return
-  end
-
-  -- Prepare the payload for Ollama API
-  local payload = {
-    model = model,
-    prompt = prefix,
-    stream = false,
-    options = {
-      temperature = 0.2,
-      num_predict = 30,
-    },
-  }
-
-  local json_payload = vim.fn.json_encode(payload)
-
-  -- Make HTTP request to local Ollama server
-  Job:new({
-    command = "curl",
-    args = {
-      "-s",
-      "-X",
-      "POST",
-      "-H",
-      "Content-Type: application/json",
-      "-d",
-      json_payload,
-      "http://localhost:11434/api/generate",
-    },
-    on_exit = function(j, _)
-      local result = table.concat(j:result(), "\n")
-      local ok, parsed = pcall(vim.fn.json_decode, result)
-
-      if not ok or not parsed or not parsed.response then
-        callback({})
-        return
-      end
-
-      -- Create completion item
-      local completion = {
-        label = parsed.response,
-        insertText = parsed.response,
-        kind = require("blink.cmp.types").CompletionItemKind.Text,
-        labelDetails = {
-          description = "(Ollama)",
-        },
-      }
-
-      callback({ completion })
-    end,
-  }):start()
-end
-
-function ollama_source.new()
-  return ollama_source
-end
-
-package.loaded["ollama_source"] = ollama_source
-
 return {
   -- Blink.cmp with Ollama integration
   {
@@ -117,21 +38,36 @@ return {
       },
       sources = {
         providers = {
+          avante = {
+            module = "blink-cmp-avante",
+            name = "Avante",
+            score_offset = 85,
+          },
           lsp = {
             score_offset = 90, -- Higher priority
           },
-          ollama = {
-            module = "ollama_source",
-            name = "Ollama 🤖", -- Custom icon/name
+          path = {
             score_offset = 100,
+          },
+          buffer = {
+            score_offset = 100,
+          },
+          snippets = {
+            score_offset = 95,
+          },
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 96,
           },
         },
         default = {
+          "lazydev",
+          "avante",
           "lsp",
           "path",
           "snippets",
           "buffer",
-          "ollama",
         },
       },
       cmdline = {
@@ -145,6 +81,27 @@ return {
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
+      {
+        "Kaiser-Yang/blink-cmp-avante",
+        -- opts = {
+        --   kind_icons = {
+        --     AvanteCmd = "",
+        --     AvanteMention = "",
+        --   },
+        --   avante = {
+        --     command = {
+        --       get_kind_name = function(_)
+        --         return "AvanteCmd"
+        --       end,
+        --     },
+        --     mention = {
+        --       get_kind_name = function(_)
+        --         return "AvanteMention"
+        --       end,
+        --     },
+        --   },
+        -- },
+      },
     },
   },
 }
