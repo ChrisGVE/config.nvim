@@ -103,11 +103,11 @@ return {
       set_keyring()
       require("avante").setup({
         provider = "ollama",
-        ollama = {
-          model = "qwen3:30b-a3b-no_think",
-          endpoint = "http://localhost:11434",
-        },
-        vendors = {
+        providers = {
+          ollama = {
+            model = "qwen3:30b-a3b-no_think",
+            endpoint = "http://localhost:11434",
+          },
           openrouter = {
             __inherited_from = "openai",
             endpoint = "https://openrouter.ai/api/v1",
