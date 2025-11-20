@@ -8,22 +8,6 @@ return {
     })
   end,
   {
-    "OXY2DEV/markview.nvim",
-    lazy = false, -- false Recommended
-    opts = {
-      preview = {
-        filetypes = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante", "codecompanion" },
-        buf_ignore = {},
-        ignore_buftypes = {},
-      },
-      max_length = 99999,
-    },
-    keys = {},
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
-  {
     "dhruvasagar/vim-table-mode",
     event = "VeryLazy",
     ft = { "markdown" },

@@ -7,33 +7,50 @@ local colors = require("catppuccin.palettes").get_palette()
 
 return {
   "akinsho/bufferline.nvim",
+  after = "catppuccin",
   event = "VeryLazy",
   keys = {
     { "gB", "<cmd>BufferLinePick<CR>", desc = "Pick a buffer" },
     { "gC", "<cmd>BufferLinePickClose<CR>", desc = "Pick a buffer and close it" },
   },
+  init = function()
+    local bufline = require("catppuccin.special.bufferline")
+    function bufline.get()
+      return bufline.get_theme()
+    end
+  end,
   opts = {
-    highlights = require("catppuccin.groups.integrations.bufferline").get({
+    highlights = require("catppuccin.special.bufferline").get_theme({
+      styles = { "italic", "bold" },
       custom = {
         all = {
-          buffer_selected = { bg = colors.surface0 },
-          duplicate_selected = { bg = colors.surface0 },
-          tab_selected = { bg = colors.surface0 },
-          tab_separator_selected = { bg = colors.surface0 },
-          indicator_selected = { bg = colors.surface0 },
-          separator_selected = { bg = colors.surface0 },
-          close_button_selected = { fg = colors.peach, bg = colors.surface0 },
-          numbers_selected = { bg = colors.surface0 },
-          error_selected = { bg = colors.surface0 },
-          error_diagnostic_selected = { bg = colors.surface0 },
-          warning_selected = { bg = colors.surface0 },
-          info_selected = { bg = colors.surface0 },
-          info_diagnostic_selected = { bg = colors.surface0 },
-          hint_selected = { bg = colors.surface0 },
-          hint_diagnostic_selected = { bg = colors.surface0 },
-          diagnostic_selected = { bg = colors.surface0 },
-          modified_selected = { bg = colors.surface0 },
+          fill = { bg = "#000000" },
         },
+        mocha = {
+          background = { fg = require("catppuccin.palettes").get_palette("mocha").text },
+        },
+        latte = {
+          background = { fg = "#000000" },
+        },
+        -- all = {
+        --   buffer_selected = { bg = colors.surface0 },
+        --   duplicate_selected = { bg = colors.surface0 },
+        --   tab_selected = { bg = colors.surface0 },
+        --   tab_separator_selected = { bg = colors.surface0 },
+        --   indicator_selected = { bg = colors.surface0 },
+        --   separator_selected = { bg = colors.surface0 },
+        --   close_button_selected = { fg = colors.peach, bg = colors.surface0 },
+        --   numbers_selected = { bg = colors.surface0 },
+        --   error_selected = { bg = colors.surface0 },
+        --   error_diagnostic_selected = { bg = colors.surface0 },
+        --   warning_selected = { bg = colors.surface0 },
+        --   info_selected = { bg = colors.surface0 },
+        --   info_diagnostic_selected = { bg = colors.surface0 },
+        --   hint_selected = { bg = colors.surface0 },
+        --   hint_diagnostic_selected = { bg = colors.surface0 },
+        --   diagnostic_selected = { bg = colors.surface0 },
+        --   modified_selected = { bg = colors.surface0 },
+        -- },
       },
     }),
     options = {
