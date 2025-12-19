@@ -10,3 +10,4 @@ lazy-lock.json
 nvim.md
 lua/plugins/ollama-cert.pem
 *.old*
+mcphub/servers.json

@@ -1,7 +1,7 @@
 return {
   "greggh/claude-code.nvim",
   dependencies = {
-    " nvim-lua/plenary.nvim",
+    "nvim-lua/plenary.nvim",
   },
   opts = {},
 }

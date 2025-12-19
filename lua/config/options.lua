@@ -20,6 +20,9 @@ vim.o.termguicolors = true
 
 vim.o.mousemoveevent = true
 
+-- vscode-diff
+vim.opt.rtp:append("~/.local/share/nvim/vscode-diff.nvim")
+
 -- vim.g.lazyvim_picker = "telescope"
 
 -- vim.g.ai_cmp = false
