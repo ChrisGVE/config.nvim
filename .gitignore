@@ -11,3 +11,4 @@ nvim.md
 lua/plugins/ollama-cert.pem
 *.old*
 mcphub/servers.json
+.aider.chat.history.md
