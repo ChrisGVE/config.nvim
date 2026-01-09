@@ -19,7 +19,6 @@ return {
       "gitattributes",
       "gitcommit",
       "gitignore",
-      "gottmpl",
       "hcl",
       "html",
       "javascript",
