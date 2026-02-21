@@ -4,7 +4,7 @@ return {
   priority = 49,
   opts = {
     preview = {
-      filetypes = { "markdown", "norg", "rmd", "org", "vimwiki", "Avante", "codecompanion" },
+      filetypes = { "markdown", "rmd", "org", "vimwiki", "Avante", "codecompanion" },
       buf_ignore = {},
       ignore_buftypes = {},
     },

@@ -47,7 +47,6 @@ return {
       "markdown",
       "markdown_inline",
       "ninja",
-      "norg",
       "ocaml",
       "printf",
       "python",
