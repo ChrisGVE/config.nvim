@@ -1,3 +1,18 @@
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TSUpdate",
+  callback = function()
+    require("nvim-treesitter.parsers").comment = {
+      install_info = {
+        url = "https://github.com/OXY2DEV/tree-sitter-comment",
+        branch = "main",
+
+        -- Also installs the query files(*syntax highlighting*), Only for the `main` branch of `nvim-treesitter`.
+        queries = "queries/",
+      },
+    }
+  end,
+})
+
 return {
   "nvim-treesitter/nvim-treesitter",
   dependencies = { "OXY2DEV/markview.nvim" },
@@ -25,7 +40,6 @@ return {
       "jsdoc",
       "json",
       "json5",
-      "jsonc",
       "latex",
       "lua",
       "luadoc",

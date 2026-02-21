@@ -6,7 +6,12 @@ local map = vim.keymap.set
 
 -- Insert new line
 map("n", "<cr>", "o<Esc>", { desc = "Insert blank line below" })
-map("n", "<S-cr>", "O<Esc>", { desc = "Insert blank line above" })
+local in_wezterm = (vim.env.WEZTERM_PANE ~= nil) or (vim.env.TERM_PROGRAM == "WezTerm")
+if in_wezterm then
+  map("n", "<Esc><CR>", "O<Esc>", { desc = "(S-Enter) Insert blank line above" })
+else
+  map("n", "<S-cr>", "O<Esc>", { desc = "Insert blank line above" })
+end
 
 -- Visual mode moving blocks
 -- map("v", "J", ":m '>+1<CR>gv=gv", { silent = true, desc = "Move block down" })
