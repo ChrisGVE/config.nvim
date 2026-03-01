@@ -8,7 +8,37 @@ vim.g.mapleader = "\\"
 vim.opt.winbar = "%=%m %f"
 vim.g.simple_todo_map_keys = 0
 
-vim.g.python3_host_prog = "/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python"
+local function resolve_python_host_prog()
+  local candidates = {}
+
+  local env_host = vim.env.NVIM_PYTHON3_HOST_PROG
+  if env_host and env_host ~= "" then
+    candidates[#candidates + 1] = env_host
+  end
+
+  candidates[#candidates + 1] = "/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python"
+
+  local python3_path = vim.fn.exepath("python3")
+  if python3_path ~= "" then
+    candidates[#candidates + 1] = python3_path
+  end
+
+  local python_path = vim.fn.exepath("python")
+  if python_path ~= "" then
+    candidates[#candidates + 1] = python_path
+  end
+
+  for _, path in ipairs(candidates) do
+    if path and path ~= "" and vim.fn.executable(path) == 1 then
+      return path
+    end
+  end
+end
+
+local python3_host_prog = resolve_python_host_prog()
+if python3_host_prog then
+  vim.g.python3_host_prog = python3_host_prog
+end
 
 vim.g.lazyvim_prettier_needs_config = false
 
@@ -126,7 +156,6 @@ opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift t
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
 opt.smoothscroll = true
-opt.spelllang = { "en" }
 opt.splitbelow = true -- Put new windows below current
 opt.splitkeep = "screen"
 opt.splitright = true -- Put new windows right of current

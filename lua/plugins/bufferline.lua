@@ -3,11 +3,9 @@
 -- local macchiato = require("catppuccin.palettes").get_palette("macchiato")
 -- local frappe = require("catppuccin.palettes").get_palette("frappe")
 -- local latte = require("catppuccin.palettes").get_palette("latte")
-local colors = require("catppuccin.palettes").get_palette()
 
 return {
   "akinsho/bufferline.nvim",
-  after = "catppuccin",
   event = "VeryLazy",
   keys = {
     { "gB", "<cmd>BufferLinePick<CR>", desc = "Pick a buffer" },
