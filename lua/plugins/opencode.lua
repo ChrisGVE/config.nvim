@@ -1,102 +1,123 @@
--- Listen for opencode events
-vim.api.nvim_create_autocmd("User", {
-  pattern = "OpencodeEvent",
-  callback = function(args)
-    -- See the available event types and their properties
-    vim.notify(vim.inspect(args.data), vim.log.levels.DEBUG)
-    -- Do something interesting, like show a notification when opencode finishes responding
-    if args.data.type == "session.idle" then
-      vim.notify("opencode finished responding", vim.log.levels.INFO)
-    end
-  end,
-})
-
 return {
   "NickvanDyke/opencode.nvim",
   dependencies = {
-    -- Recommended for better prompt input, and required to use `opencode.nvim`'s embedded terminal — otherwise optional
     { "folke/snacks.nvim", opts = { input = { enabled = true } } },
   },
   keys = {
-    { "_a", "", desc = "AI Menu" },
+    { "<leader>o", "", desc = "AI/OpenCode" },
     {
-      "_at",
+      "<leader>ot",
       function()
         require("opencode").toggle()
       end,
       desc = "Toggle opencode",
     },
     {
-      "_aA",
+      "<leader>oa",
       function()
         require("opencode").ask()
       end,
       desc = "Ask opencode",
     },
     {
-      "_aa",
-      function()
-        require("opencode").ask("@cursor: ")
-      end,
-      desc = "Ask opencode about this",
-    },
-    {
-      "_ae",
-      function()
-        require("opencode").prompt("Explain @cursor and its context")
-      end,
-      desc = "Explain this code",
-    },
-    {
-      "_aa",
+      "<leader>oa",
       function()
         require("opencode").ask("@selection: ")
       end,
-      desc = "Ask opencode about selection",
+      desc = "Ask about selection",
       mode = "v",
     },
     {
-      "_an",
+      "<leader>oA",
       function()
-        require("opencode").command("session_new")
+        require("opencode").ask("@cursor: ")
       end,
-      desc = "New opencode session",
+      desc = "Ask about cursor context",
     },
     {
-      "_ay",
+      "<leader>oe",
       function()
-        require("opencode").command("messages_copy")
+        require("opencode").prompt("Explain @cursor and its context")
       end,
-      desc = "Copy last opencode response",
+      desc = "Explain code at cursor",
     },
     {
-      "<s-C-u>",
+      "<leader>on",
       function()
-        require("opencode").command("messages_half_page_up")
+        require("opencode").command("session.new")
       end,
-      desc = "Messages half page up",
+      desc = "New session",
     },
     {
-      "<s-C-d>",
+      "<leader>oy",
       function()
-        require("opencode").command("messages_half_page_down")
+        require("opencode").command("session.share")
       end,
-      desc = "messages half page up",
+      desc = "Share session",
     },
     {
-      "_as",
+      "<leader>os",
       function()
         require("opencode").select()
       end,
-      desc = "Select opencode prompt",
+      desc = "Select prompt",
+    },
+    {
+      "<leader>or",
+      function()
+        require("opencode").prompt("Review @file for bugs, improvements, and best practices")
+      end,
+      desc = "Review file",
+    },
+    {
+      "<leader>of",
+      function()
+        require("opencode").prompt("Fix the diagnostics in @file")
+      end,
+      desc = "Fix diagnostics",
+    },
+    {
+      "<leader>od",
+      function()
+        require("opencode").prompt("Add documentation to @cursor")
+      end,
+      desc = "Document code",
+    },
+    {
+      "<leader>od",
+      function()
+        require("opencode").prompt("Add documentation to @selection")
+      end,
+      desc = "Document code",
+      mode = "v",
+    },
+    {
+      "<S-C-u>",
+      function()
+        require("opencode").command("session.half.page.up")
+      end,
+      desc = "Scroll messages up",
+    },
+    {
+      "<S-C-d>",
+      function()
+        require("opencode").command("session.half.page.down")
+      end,
+      desc = "Scroll messages down",
     },
   },
   config = function()
-    vim.g.opencode_opts = {
-      -- Your configuration, if any — see `lua/opencode/config.lua`
-    }
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "OpencodeEvent",
+      callback = function(args)
+        vim.notify(vim.inspect(args.data), vim.log.levels.DEBUG)
+        if args.data.type == "session.idle" then
+          vim.notify("opencode finished responding", vim.log.levels.INFO)
+        end
+      end,
+    })
 
-    -- Required for `opts.auto_reload`
+    vim.g.opencode_opts = {}
     vim.opt.autoread = true
   end,
 }
