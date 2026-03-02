@@ -200,4 +200,23 @@ return {
       end
     end,
   },
+
+  {
+    "folke/noice.nvim",
+    opts_extend = { "routes" },
+    opts = {
+      routes = {
+        {
+          filter = {
+            event = "lsp",
+            kind = "progress",
+            cond = function(_message)
+              return prose_filetype_lookup[vim.bo.filetype] == true
+            end,
+          },
+          opts = { skip = true },
+        },
+      },
+    },
+  },
 }
