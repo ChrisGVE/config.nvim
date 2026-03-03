@@ -38,11 +38,6 @@ return {
       },
       sources = {
         providers = {
-          avante = {
-            module = "blink-cmp-avante",
-            name = "Avante",
-            score_offset = 85,
-          },
           lsp = {
             score_offset = 90, -- Higher priority
           },
@@ -63,7 +58,6 @@ return {
         },
         default = {
           "lazydev",
-          "avante",
           "lsp",
           "path",
           "snippets",
@@ -81,27 +75,6 @@ return {
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
-      {
-        "Kaiser-Yang/blink-cmp-avante",
-        -- opts = {
-        --   kind_icons = {
-        --     AvanteCmd = "",
-        --     AvanteMention = "",
-        --   },
-        --   avante = {
-        --     command = {
-        --       get_kind_name = function(_)
-        --         return "AvanteCmd"
-        --       end,
-        --     },
-        --     mention = {
-        --       get_kind_name = function(_)
-        --         return "AvanteMention"
-        --       end,
-        --     },
-        --   },
-        -- },
-      },
     },
   },
 }
