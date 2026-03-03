@@ -34,7 +34,6 @@ local code_filetypes = {
   "rust",
   "sh",
   "swift",
-  "toml",
   "typescript",
   "typescriptreact",
 }
