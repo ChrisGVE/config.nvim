@@ -6,7 +6,7 @@ return {
       provider = "openai_compatible",
       provider_options = {
         openai_compatible = {
-          model = "claude-haiku-4-5-20251001",
+          model = "gpt-4.1-nano",
           end_point = "https://routellm.abacus.ai/v1/chat/completions",
           api_key = "ABACUS_API_KEY",
           name = "Abacus",
